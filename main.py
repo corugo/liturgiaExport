@@ -75,21 +75,23 @@ def processar_arquivo(arquivo):
                 nome_arquivo = os.path.basename(caminho_origem)
                 if os.path.isfile(caminho_origem):
                     novo_caminho = os.path.join("C:\\liturgia\\temp", nome_arquivo)
+                    novo_dir = os.path.join("C:\\liturgia", nome_arquivo)
                 else:
                     novo_caminho = "C:\\liturgia\\temp\\" + caminho_origem.split(os.path.sep)[-2]
+                    novo_dir = "C:\\liturgia\\" + caminho_origem.split(os.path.sep)[-2]
                 
                 if copiar_arquivo(caminho_origem, novo_caminho):
-                    linha = f"dir={novo_caminho}\n"
+                    linha = f"dir={novo_dir}\n"
 
             novo_conteudo.append(linha)
 
     # Escreve o novo conteúdo de volta no arquivo
-    with open(arquivo, 'w') as arquivo_modificado:
-        arquivo_modificado.writelines(novo_conteudo)
-
     # Copia o arquivo liturgia.ja para a pasta C:\liturgia
     destino_liturgia = os.path.join(caminho_liturgia, os.path.basename(arquivo))
-    shutil.copyfile(arquivo, destino_liturgia)
+    with open(destino_liturgia, 'w') as arquivo_modificado:
+        arquivo_modificado.writelines(novo_conteudo)
+
+    #shutil.copyfile(arquivo, destino_liturgia)
 
 # Nome do arquivo que você quer acessar
 nome_arquivo = 'liturgia.ja'
