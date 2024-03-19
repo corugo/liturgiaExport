@@ -59,7 +59,7 @@ def copiar_arquivo(origem, destino):
 
 def processar_arquivo(arquivo):
     novo_conteudo = []
-    caminho_liturgia = "C:\\liturgia"
+    caminho_liturgia = "C:\\liturgia\\temp"
 
     with open(arquivo, 'r') as arquivo_original:
         for linha in arquivo_original:
@@ -74,9 +74,9 @@ def processar_arquivo(arquivo):
                 caminho_origem = linha.split('=')[1].strip()
                 nome_arquivo = os.path.basename(caminho_origem)
                 if os.path.isfile(caminho_origem):
-                    novo_caminho = os.path.join(caminho_liturgia, nome_arquivo)
+                    novo_caminho = os.path.join("C:\\liturgia\\temp", nome_arquivo)
                 else:
-                    novo_caminho = "C:\\liturgia\\" + caminho_origem.split(os.path.sep)[-2]
+                    novo_caminho = "C:\\liturgia\\temp\\" + caminho_origem.split(os.path.sep)[-2]
                 
                 if copiar_arquivo(caminho_origem, novo_caminho):
                     linha = f"dir={novo_caminho}\n"
@@ -93,6 +93,11 @@ def processar_arquivo(arquivo):
 
 # Nome do arquivo que você quer acessar
 nome_arquivo = 'liturgia.ja'
+
+pasta_liturgia = "C:\\liturgia\\temp"
+
+if not os.path.exists (pasta_liturgia) :
+    os.makedirs (pasta_liturgia)
 
 # Encontra o caminho completo do arquivo
 caminho_arquivo = encontrar_arquivo(nome_arquivo)
